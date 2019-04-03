@@ -26,6 +26,8 @@
         </table>
     @endif
     
+    
+    
     {!! link_to_route("tasks.create", "作成", null, ["class" => "btn btn-primary"]) !!}
-
+    
 @endsection
