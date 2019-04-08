@@ -120,6 +120,7 @@ class TasksController extends Controller
         
             return view("tasks.edit", [
                 "task" => $task,
+                
                 ]);
         }
         return redirect("/");
@@ -139,15 +140,16 @@ class TasksController extends Controller
             "status" => "required|max:10",
             ]);
             
-        if(\Auth::id() === $task->user_id) {
-            $task = Task::find($id);
-            $task->content = $request->content;
-            $task->status = $request->status;
-            $task->save();
+            $request->user()->tasks()->create([
+            "content" => $request->content,
+            "status" => $request->status,
+            ]);
+            
+        return redirect("/");
         }
         
-        return redirect("/");
-    }
+        
+    
 
     /**
      * Remove the specified resource from storage.
