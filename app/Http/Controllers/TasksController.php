@@ -114,6 +114,7 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
+        $data = [];
         $task = Task::find($id);
         
         if(\Auth::id() === $task->user_id) {
@@ -122,7 +123,9 @@ class TasksController extends Controller
                 "task" => $task,
                 
                 ]);
-        }
+                
+    }
+        
         return redirect("/");
     }
 
@@ -140,13 +143,17 @@ class TasksController extends Controller
             "status" => "required|max:10",
             ]);
             
-            $request->user()->tasks()->create([
-            "content" => $request->content,
-            "status" => $request->status,
-            ]);
+            $task = \App\Task::find($id);
+            $task ->content = $request->content;
+            $task ->status = $request->status;
+            $task ->save();
+            
+            
             
         return redirect("/");
         }
+        
+        
         
         
     
